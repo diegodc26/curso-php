@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 //array
 $categorias = [];
 $categorias[] = 'Infantil';
@@ -13,47 +14,73 @@ $nome = $_POST['nome'];
 $idade = $_POST['idade'];
 
 //validação nome
-if(empty($nome)){
-    echo 'O nome não pode estar em branco';
+if(empty($nome))
+{
+    $_SESSION['mensagem-de-erro'] = 'O nome não pode estar vazio';
+    header('location: http://localhost:8080/curso-php/index.php');
     return;
 }
-if (strlen($nome) <=2){
-    echo 'O nome deve conter mais que 2 caracteres';
+else if (strlen($nome) <=2)
+{
+    $_SESSION['mensagem-de-erro'] = 'O nome deve conter mais que 2 caracteres';
+    header('location: http://localhost:8080/curso-php/index.php');
     return;
-}elseif(strlen($nome) >=40){
-    echo 'Nome muito extenso';
+}elseif(strlen($nome) >=40)
+{
+    $_SESSION['mensagem-de-erro'] = 'Nome muito extenso';
+    header('location: http://localhost:8080/curso-php/index.php');
     return;
 }
 
 //validação idade
-if(empty($idade) and $idade <=0){
-    echo 'Idade não pode ser vazia';
+else if(empty($idade) and $idade <=0)
+{
+    $_SESSION['mensagem-de-erro'] = 'Idade nao pode ser vazia ou 0';
+    header('location: http://localhost:8080/curso-php/index.php');
     return;
 }
-if(!is_numeric($idade)){
-    echo 'Idade tem que ser um numero';
+else if(!is_numeric($idade))
+{
+    $_SESSION['mensagem-de-erro'] = 'Idade tem que ser um numero';
+    header('location: http://localhost:8080/curso-php/index.php');
     return;
 }
 
 
 //var_dump($nome, $idade);
 
-if ($idade >= 6 && $idade <=12){
+if ($idade >= 6 && $idade <=12)
+{
     
     for($i = 0; $i <= count($categorias); $i++){
         if($categorias[$i] == 'Infantil' )
-        echo "O nadador " .$nome . " compete na categoria: " .$categorias[$i];
+        $_SESSION['mensagem-de-sucesso'] = "O nadador " .$nome . " compete na categoria: " .$categorias[$i];
+        header('location: http://localhost:8080/curso-php/index.php');
+        return;
     }
-}elseif($idade >=13 && $idade <=17){
+}elseif($idade >=13 && $idade <=17)
+{
     for($i = 0; $i <= count($categorias); $i++){
         if($categorias[$i] == 'adolescente' )
-        echo "O nadador " .$nome . " compete na categoria: " .$categorias[$i];
+        $_SESSION['mensagem-de-sucesso'] = "O nadador " .$nome . " compete na categoria: " .$categorias[$i];
+        header('location: http://localhost:8080/curso-php/index.php');
+        return;
     }
-}else {
+}else
+{
     for($i = 0; $i <= count($categorias); $i++){
         if($categorias[$i] == 'adulto' )
-        echo "O nadador " .$nome . " compete na categoria: " .$categorias[$i];
+        $_SESSION['mensagem-de-sucesso'] = "O nadador " .$nome . " compete na categoria: " .$categorias[$i];
+        header('location: http://localhost:8080/curso-php/index.php');
+        return;
     }
 }
-
+/*
+else
+{
+    $_SESSION['mensagem-de-sucesso'] = "O nadador " .$nome . " não tem idade para competir ";
+    header('location: http://localhost:8080/curso-php/index.php');
+    return;
+}
+*/
 ?>
